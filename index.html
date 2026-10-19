@@ -24,12 +24,12 @@
       background-image: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.12), transparent 50%);
     }
     .container { max-width: 1020px; margin: 0 auto; padding: 0 20px; }
-    section { padding: 44px 0; }
+    section { padding: 42px 0; }
     h2 { font-size: 1.75rem; text-align: center; margin-bottom: 10px; letter-spacing: -0.02em; }
-    .sub { text-align: center; color: var(--muted); margin-bottom: 34px; font-size: 0.98rem; }
+    .sub { text-align: center; color: var(--muted); margin-bottom: 32px; font-size: 0.98rem; }
 
     /* 1. HERO SECTION */
-    .hero { text-align: center; padding: 64px 0 32px; }
+    .hero { text-align: center; padding: 60px 0 28px; }
     .avatar {
       width: 76px; height: 76px; margin: 0 auto 20px;
       border-radius: 22px; background: linear-gradient(135deg, #10b981, #0284c7);
@@ -50,7 +50,7 @@
     .hero h1 { font-size: clamp(2.2rem, 5vw, 3.2rem); letter-spacing: -0.03em; margin-bottom: 14px; }
     .hero p { font-size: 1.15rem; color: var(--muted); max-width: 680px; margin: 0 auto; }
 
-    /* VISITOR DASHBOARD (HARI BERJALAN) */
+    /* DASHBOARD PENGUNJUNG HARI BERJALAN */
     .visitor-dash {
       background: linear-gradient(180deg, rgba(30, 41, 59, 0.6), rgba(17, 24, 39, 0.9));
       border: 1px solid rgba(56, 189, 248, 0.22); border-radius: 16px;
@@ -122,7 +122,7 @@
       padding: 8px 14px; border-radius: 10px; font-size: 0.85rem; cursor: pointer; transition: all 0.2s; font-weight: 500;
     }
     .btn-sim:hover, .btn-sim.active { background: var(--accent); color: #052e16; border-color: var(--accent); font-weight: 600; }
-    .chat-area { height: 320px; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
+    .chat-area { height: 300px; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 14px; }
     .msg { max-width: 82%; padding: 12px 16px; border-radius: 14px; font-size: 0.92rem; animation: fadeIn 0.25s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
     .msg.user { align-self: flex-end; background: #0284c7; color: #fff; border-bottom-right-radius: 4px; }
@@ -133,6 +133,24 @@
       color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);
       padding: 2px 8px; border-radius: 4px; margin: 6px 4px 0 0; font-weight: 600;
     }
+
+    /* TABEL SUPABASE PLACES */
+    .table-wrap {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; overflow-x: auto; box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    }
+    #places { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+    #places th {
+      background: #0d1322; color: var(--muted); font-weight: 600; text-transform: uppercase;
+      font-size: 0.76rem; letter-spacing: 0.05em; padding: 14px 16px; border-bottom: 1px solid var(--border);
+    }
+    #places td { padding: 13px 16px; border-bottom: 1px solid var(--border); color: #e2e8f0; }
+    #places tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
+    #places a {
+      color: var(--accent); text-decoration: none; font-weight: 600;
+      background: rgba(16, 185, 129, 0.12); padding: 4px 10px; border-radius: 6px;
+    }
+    #places a:hover { background: var(--accent); color: #042f2e; }
 
     /* 5. FOOTER & CTA */
     .footer {
@@ -171,7 +189,7 @@
       <div class="dash-grid">
         <div class="stat-box">
           <div class="stat-label">Pengunjung Hari Ini</div>
-          <div class="stat-value"><span id="todayVisitors">0</span> <span class="stat-delta" id="visitorDelta">+1 baru</span></div>
+          <div class="stat-value"><span id="todayVisitors">0</span> <span class="stat-delta">+1 baru</span></div>
         </div>
         <div class="stat-box">
           <div class="stat-label">Sedang Mengakses Web</div>
@@ -255,6 +273,20 @@
         </div>
       </div>
     </section>
+
+    <!-- DIREKTORI LOKASI & REKOMENDASI (SUPABASE) -->
+    <section>
+      <h2>Direktori Lokasi & Fasilitas Terdekat</h2>
+      <p class="sub">Data lokasi terintegrasi secara langsung dari database Supabase.</p>
+      <div class="table-wrap">
+        <table id="places">
+          <thead>
+            <tr><th>Nama</th><th>Kategori</th><th>Rating</th><th>Review</th><th>Kota</th><th>Telepon</th><th>Maps</th></tr>
+          </thead>
+          <tbody><tr><td colspan="7">Memuat data...</td></tr></tbody>
+        </table>
+      </div>
+    </section>
   </div>
 
   <!-- 5. FOOTER & CTA -->
@@ -288,10 +320,10 @@
     document.getElementById('simCount').textContent = sims;
 
     setInterval(() => {
-      const active = Math.floor(Math.random() * 4) + 2;
-      document.getElementById('activeVisitors').textContent = active;
+      document.getElementById('activeVisitors').textContent = Math.floor(Math.random() * 4) + 2;
     }, 5000);
 
+    // Simulasi Interaktif Chat Manggala AI
     const scenarios = {
       1: {
         user: "Halo kak, apakah masih ada kamar kosong di Kos Manggala House untuk bulan ini? Bisa survei besok sore jam 16.00?",
@@ -341,6 +373,48 @@
         chat.appendChild(botMsg); chat.scrollTop = chat.scrollHeight;
       }, 1250);
     }
+
+    // Integrasi Data Tabel Places dari Supabase
+    const SUPABASE_URL = 'https://mybmzwbgpefdqosiddus.supabase.co'; // isi dengan SUPABASE_URL
+    const SUPABASE_KEY = 'sb_publishable_qnztsVmGDV037Y7w6Xu-kw_6j4LT6BR'; // publishable key, BUKAN secret key
+
+    async function loadPlaces() {
+      const tbody = document.querySelector('#places tbody');
+      try {
+        const res = await fetch(
+          SUPABASE_URL + '/rest/v1/places?select=*&order=reviews_count.desc.nullslast&limit=100',
+          { headers: { apikey: SUPABASE_KEY } }
+        );
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const rows = await res.json();
+
+        tbody.replaceChildren();
+        for (const p of rows) {
+          const tr = document.createElement('tr');
+          for (const v of [p.title, p.category_name, p.total_score, p.reviews_count, p.city, p.phone]) {
+            const td = document.createElement('td');
+            td.textContent = v ?? '-';
+            tr.appendChild(td);
+          }
+          const td = document.createElement('td');
+          if (p.url && p.url.startsWith('https://')) {
+            const a = document.createElement('a');
+            a.href = p.url;
+            a.target = '_blank';
+            a.rel = 'noopener';
+            a.textContent = 'Buka';
+            td.appendChild(a);
+          }
+          tr.appendChild(td);
+          tbody.appendChild(tr);
+        }
+        if (!rows.length) tbody.innerHTML = '<tr><td colspan="7">Belum ada data.</td></tr>';
+      } catch (e) {
+        tbody.innerHTML = '<tr><td colspan="7">Gagal memuat data.</td></tr>';
+        console.error(e);
+      }
+    }
+    loadPlaces();
   </script>
 </body>
 </html>
